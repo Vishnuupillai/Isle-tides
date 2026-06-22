@@ -52,39 +52,41 @@ if (quoteBg) {
 
 /* ── Lightbox ──────────────────────────────────────────── */
 const IMAGES = [
+  // Highlighted (0–11)
   'Images/Main/IMG-20260118-WA0002.jpg.jpeg',
-  'Images/Main/IMG-20260423-WA0025.jpg.jpeg',
-  'Images/Main/IMG-20260423-WA0042.jpg.jpeg',
-  'Images/Main/IMG-20260423-WA0046.jpg.jpeg',
-  'Images/Main/IMG-20260423-WA0052.jpg.jpeg',
-  'Images/Main/IMG-20260423-WA0054.jpg.jpeg',
-  'Images/Main/IMG-20260423-WA0058.jpg.jpeg',
-  'Images/Main/IMG-20260423-WA0060.jpg.jpeg',
-  'Images/Main/IMG-20260423-WA0062.jpg.jpeg',
-  'Images/Main/IMG-20260423-WA0064.jpg.jpeg',
-  'Images/Main/IMG-20260423-WA0066.jpg.jpeg',
-  'Images/Main/IMG-20260521-WA0017.jpg.jpeg',
-  'Images/Main/IMG-20260521-WA0019.jpg.jpeg',
   'Images/Main/IMG-20260521-WA0022.jpg.jpeg',
   'Images/Main/IMG-20260522-WA0010.jpg.jpeg',
   'Images/Main/IMG-20260522-WA0017.jpg.jpeg',
-  'Images/Main/IMG-20260522-WA0022.jpg.jpeg',
   'Images/Main/IMG-20260609-WA0041.jpg.jpeg',
   'Images/Main/IMG-20260609-WA0045.jpg.jpeg',
   'Images/Main/IMG-20260609-WA0046.jpg.jpeg',
   'Images/Main/IMG-20260609-WA0047.jpg.jpeg',
-  'Images/Main/IMG-20260615-WA0029.jpg.jpeg',
-  'Images/Main/IMG-20260615-WA0031.jpg.jpeg',
-  'Images/Main/IMG-20260615-WA0039.jpg.jpeg',
-  'Images/Main/IMG-20260615-WA0045.jpg.jpeg',
   'Images/Main/IMG-20260615-WA0047.jpg.jpeg',
-  'Images/Main/IMG-20260616-WA0013.jpg.jpeg',
-  'Images/Main/IMG-20260616-WA0029.jpg.jpeg',
   'Images/Main/IMG-20260616-WA0032.jpg.jpeg',
   'Images/Main/IMG-20260616-WA0033.jpg.jpeg',
   'Images/Main/SAVE_20260529_201956.jpg.jpeg',
+  // More (12–32)
+  'Images/Main/IMG-20260423-WA0066.jpg.jpeg',
+  'Images/Main/IMG-20260423-WA0054.jpg.jpeg',
+  'Images/Main/IMG-20260423-WA0060.jpg.jpeg',
+  'Images/Main/IMG-20260423-WA0058.jpg.jpeg',
+  'Images/Main/IMG-20260423-WA0046.jpg.jpeg',
+  'Images/Main/IMG-20260423-WA0025.jpg.jpeg',
+  'Images/Main/IMG-20260423-WA0042.jpg.jpeg',
+  'Images/Main/IMG-20260423-WA0062.jpg.jpeg',
+  'Images/Main/IMG-20260423-WA0052.jpg.jpeg',
+  'Images/Main/IMG-20260423-WA0064.jpg.jpeg',
+  'Images/Main/IMG-20260521-WA0017.jpg.jpeg',
+  'Images/Main/IMG-20260521-WA0019.jpg.jpeg',
+  'Images/Main/IMG-20260522-WA0022.jpg.jpeg',
   'Images/Main/SAVE_20260529_202010.jpg.jpeg',
   'Images/Main/SAVE_20260529_202348.jpg.jpeg',
+  'Images/Main/IMG-20260615-WA0029.jpg.jpeg',
+  'Images/Main/IMG-20260615-WA0039.jpg.jpeg',
+  'Images/Main/IMG-20260615-WA0031.jpg.jpeg',
+  'Images/Main/IMG-20260615-WA0045.jpg.jpeg',
+  'Images/Main/IMG-20260616-WA0013.jpg.jpeg',
+  'Images/Main/IMG-20260616-WA0029.jpg.jpeg',
 ];
 
 const lb        = document.getElementById('lightbox');
@@ -147,13 +149,22 @@ function lbRender() {
   }
 }
 
-// Click on gallery items
-document.querySelectorAll('.gallery__item[data-lb-index]').forEach(item => {
+// Click on masonry items (covers both visible and .masonry__more)
+document.querySelectorAll('.masonry__item[data-lb-index]').forEach(item => {
   item.addEventListener('click', () => lbOpen(parseInt(item.dataset.lbIndex, 10)));
-  item.style.cursor = 'pointer';
 });
 
-// "View All" button opens at index 0
+// "View More Images" toggle
+const viewMoreBtn = document.getElementById('viewMoreBtn');
+if (viewMoreBtn) {
+  viewMoreBtn.addEventListener('click', () => {
+    const more = document.querySelector('.masonry__more');
+    more.hidden = !more.hidden;
+    viewMoreBtn.textContent = more.hidden ? 'View More Images' : 'Show Less';
+  });
+}
+
+// "View Full Screen" button opens at index 0
 if (viewAllBtn) viewAllBtn.addEventListener('click', () => lbOpen(0));
 
 lbClose.addEventListener('click', lbClose_fn);
